@@ -1,0 +1,29 @@
+POST http://localhost:9000/place-api/places
+Content-Type: application/json
+
+    {
+        "name": "Nehru Zoological Park",
+        "description": "One of the largest zoos in India, home to various wildlife species and a popular attraction for nature lovers and families.",
+        "image": "https://www.holidify.com/images/attr_wiki/compressed/attr_wiki_1029.jpg",
+        "location": "Hyderabad, Telangana",
+        "latitude": 17.3505,
+        "longitude": 78.4517
+        
+    }
+
+###get
+
+GET http://localhost:9000/place-api/all
+
+
+###
+POST http://localhost:9000/user-api/register
+Content-Type: application/json
+
+{
+    "clerkId":"123",
+    "firstName":"Bhargav",
+    "lastName":"D",
+    "emailAddresses":"abc@mail.com",
+    "profileImageUrl":"user1.jpg"
+}
