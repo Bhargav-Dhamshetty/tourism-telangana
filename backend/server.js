@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-    origin: 'https://tourism-telangana.vercel.app', // Adjust as per frontend
+    origin: 'https://tourism-telangana-git-main-bhargav-dhamshettys-projects.vercel.app', // Adjust as per frontend
     credentials: true,
 };
 
