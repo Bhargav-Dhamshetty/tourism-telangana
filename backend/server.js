@@ -12,7 +12,7 @@ const app = express();
 
 
 const allowedOrigins = [
-    'https://tourism-telangana-git-main-bhargav-dhamshettys-projects.vercel.app'
+    'https://tourism-telangana-cc9rm8k6j-bhargav-dhamshettys-projects.vercel.app'
   ];
   
   app.use(cors({
