@@ -10,12 +10,20 @@ dotenv.config();
 
 const app = express();
 
-const corsOptions = {
-    origin: 'https://tourism-telangana-git-main-bhargav-dhamshettys-projects.vercel.app', // Adjust as per frontend
-    credentials: true,
-};
 
-app.use(cors(corsOptions));
+const allowedOrigins = [
+    'https://tourism-telangana-git-main-bhargav-dhamshettys-projects.vercel.app'
+  ];
+  
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
