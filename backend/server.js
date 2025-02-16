@@ -1,40 +1,34 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const userApp = require('./APIs/userApi');
-const placeApp = require('./APIs/placeApi');
-const { ClerkExpressWithAuth } = require("@clerk/clerk-sdk-node"); // Ensure Clerk is properly required
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const userApp = require("./APIs/userApi");
+const placeApp = require("./APIs/placeApi");
+const { requireAuth } = require("@clerk/express"); // ✅ Correct Clerk import
 
 dotenv.config();
+
 const app = express();
 
-// Debugging: Ensure .env variables are loaded
-console.log("DB URL:", process.env.DBURL);
-console.log("Port:", process.env.PORT || 6000);
+const corsOptions = {
+    origin: 'https://tourism-telangana.vercel.app/', // Adjust as per frontend
+    credentials: true,
+};
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Clerk Authentication Middleware (Placed AFTER CORS & JSON Middleware)
-app.use(ClerkExpressWithAuth());
+// ✅ Apply Clerk Authentication Middleware for user routes
+app.use("/user-api", userApp);
+app.use("/place-api", placeApp);
 
-// API Routes
-app.use('/user-api', userApp);
-app.use('/place-api', placeApp);
+const port = process.env.PORT || 9000;
 
-// Database Connection & Server Start
-const port = process.env.PORT || 6000;
-
-(async () => {
-    try {
-        await mongoose.connect(process.env.DBURL); // ✅ Removed deprecated options
-        console.log("✅ DB connection is Successful");
+mongoose
+    .connect(process.env.DBURL)
+    .then(() => {
         app.listen(port, () => console.log(`🚀 Server listening on port ${port}`));
-    } catch (error) {
-        console.error("❌ DB connection error:", error);
-        process.exit(1); // Exit process on DB failure
-    }
-})();
+        console.log("✅ DB connection successful");
+    })
+    .catch((err) => console.error("❌ DB connection error:", err));
