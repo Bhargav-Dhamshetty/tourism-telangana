@@ -16,7 +16,7 @@ const PlacesList = () => {
 
   const fetchPlaces = async () => {
     try {
-      const response = await axios.get("http://localhost:9000/place-api/all");
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL_PLACE}/all`);
       setPlaces(response.data.payload);
     } catch (error) {
       console.error("Error fetching places:", error);
@@ -29,7 +29,7 @@ const PlacesList = () => {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:9000/place-api/search?query=${query}`);
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL_PLACE}/search?query=${query}`);
       setPlaces(response.data);
     } catch (error) {
       console.error("Error searching places:", error);
@@ -38,7 +38,7 @@ const PlacesList = () => {
 
   const handleMapNavigation = async (placeId) => {
     try {
-      const response = await axios.get(`http://localhost:9000/place-api/${placeId}/location`);
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL_PLACE}/${placeId}/location`);
       const location = response.data;
       if (location) {
         window.open(`https://www.google.com/maps?q=${location.latitude},${location.longitude}`, "_blank");
@@ -56,7 +56,7 @@ const PlacesList = () => {
       return;
     }
     try {
-      await axios.post(`http://localhost:9000/place-api/${placeId}/review`, {
+      await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL_PLACE}/${placeId}/review`, {
         user: "Guest User",
         comment: reviewText[placeId],
         rating: parseInt(reviewRating[placeId]),

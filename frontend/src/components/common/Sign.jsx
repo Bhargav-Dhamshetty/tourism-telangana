@@ -24,7 +24,7 @@ function Sign() {
             profileImageUrl: user.profileImageUrl || "",
           };
 
-          await axios.post("http://localhost:9000/user-api/register", userData, {
+          await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL_USER}/register`, userData, {
             headers: { Authorization: `Bearer ${token}` },
           });
 
